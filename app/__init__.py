@@ -1,3 +1,4 @@
+import re
 from flask import Flask
 from .extension import db
 from .config import Config
