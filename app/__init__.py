@@ -1,3 +1,4 @@
+import re
 from flask import Flask
 from .extension import db
 from .config import Config
@@ -5,12 +6,14 @@ from flask_cors import CORS
 
 def create_app():
     app = Flask(__name__)
-    CORS(app, origins=["http://localhost:3000"])
+
+    # ✅ Allow any origin from port 3000
+    CORS(app, origins=[re.compile(r"^http:\/\/.*:3000$")])
+
     app.config.from_object(Config)
     db.init_app(app)
 
     from .api.users.routes import user_bp
-    app.register_blueprint(user_bp,url_prefix='/api/users')
-                           
-                           
+    app.register_blueprint(user_bp, url_prefix='/api/users')
+
     return app
