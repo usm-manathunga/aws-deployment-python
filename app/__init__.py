@@ -8,12 +8,13 @@ def create_app():
     app = Flask(__name__)
 
     # ✅ Allow any origin from port 3000
-    CORS(app, origins=[re.compile(r"^http:\/\/.*:3000$")])
 
+    CORS(app, resources={r"/api/*": {"origins": re.compile(r"^http:\/\/.*:3000$")}})
     app.config.from_object(Config)
     db.init_app(app)
 
     from .api.users.routes import user_bp
     app.register_blueprint(user_bp, url_prefix='/api/users')
+
 
     return app
