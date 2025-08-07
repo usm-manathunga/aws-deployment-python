@@ -7,7 +7,6 @@ from flask_cors import CORS
 def create_app():
     app = Flask(__name__)
 
-    # ✅ Allow any origin from port 3000
 
     CORS(app, resources={r"/api/*": {"origins": re.compile(r"^http:\/\/.*:3000$")}})
     app.config.from_object(Config)
